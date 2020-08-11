@@ -3,6 +3,13 @@ function generateBlocks() {
 	return general.style.display = 'block';
 }
 
+function setColor() {
+	let div = document.querySelectorAll('.blocks'); 
+		for (let i = 0; i < div.length; i++) {
+			div[i].style.backgroundColor = `${getRandomColor()}`;
+		}
+}
+
 
 function getRandomColor() {
 	let color = []
@@ -11,15 +18,9 @@ function getRandomColor() {
 	}
 	return `#${color.join('')}`
 }
-
+let timerColor;
 function generateBlocksInterval() {
-	let timer = setTimeout(function time() {
-		let div = document.querySelectorAll('.blocks'); 
-		for (let i = 0; i < div.length; i++) {
-			div[i].style.backgroundColor = `${getRandomColor()}`;
-		}
-		timer = setTimeout(time, 1000);
-	}, 10);
+	timerColor = setInterval(() => setColor(), 1000);
 }
 
 
@@ -28,16 +29,20 @@ function generateBlocksInterval() {
 let btn1 = document.getElementById('watch');
 btn1.addEventListener('click', () => {
 	generateBlocks();
-	let div = document.querySelectorAll('.blocks'); 
-	for (let i = 0; i < div.length; i++) {
-		div[i].style.backgroundColor = `${getRandomColor()}`;
-	}
+	setColor();
+	btn1.style.display = 'none';
 });
 
 let timer = document.getElementById('timer');
 timer.addEventListener('click', () => {
 	generateBlocksInterval();
+	timer.style.display = 'none';
 });
 
+let stop = document.getElementById('stop');
+stop.addEventListener('click', () => {
+	clearInterval(timerColor);
+	timer.style.display = 'inline-block';
+});
 
 
